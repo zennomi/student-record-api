@@ -79,7 +79,7 @@
 						"type": "string"
 					}
 				],
-				"name": "getIndexArrByStdId",
+				"name": "getArrIndexByStdId",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -113,8 +113,28 @@
 						"type": "string"
 					},
 					{
+						"internalType": "string",
+						"name": "id",
+						"type": "string"
+					},
+					{
 						"internalType": "uint256",
 						"name": "recordCount",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "studentsLength",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
 						"type": "uint256"
 					}
 				],
@@ -151,10 +171,10 @@
 			]
 		},
 		"StudentFactory.sol": {
-			"keccak256": "0x16b5a1130f284d4a21d7287676682b08ced85145a3da0efe13abd0364a1ab954",
+			"keccak256": "0x4a68c6e0c2157dd34dc163280439e0e4b5e28072841c21280ef37d3c21ea47cf",
 			"urls": [
-				"bzz-raw://480b1456896f2695ce3ec36c8a274db16b83163641b290dcb812af285ca5d2c4",
-				"dweb:/ipfs/QmcDK5NC3AQ72ztn7xBm2RrTiEjP9isgacz5ypNBs67f27"
+				"bzz-raw://a9e3db2c112727a79a73f328a0071925b2009c0b910398dffbacc08e665e0b23",
+				"dweb:/ipfs/Qmeee3qEGgfGK29n3oYLS4CaZSjkyuPAJxfP67veKa59rx"
 			]
 		}
 	},

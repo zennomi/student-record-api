@@ -18,14 +18,14 @@ contract RecordTracking is StudentFactory {
     }
 
     function addRecordByStdId(string memory _stdId, string memory _subjectId, uint8 _mark) public {
-        uint index = getIndexArrByStdId(_stdId);
+        uint index = getArrIndexByStdId(_stdId);
         require(_mark <= 100, "Invalid Mark");
         _addRecord(_subjectId, index, _mark);
     }
 
     function getRecordIndexesByStdId(string memory _stdId) public view returns (uint[] memory) {
-        uint index = getIndexArrByStdId(_stdId);
-        uint[] memory results = new uint[](records.length);
+        uint index = getArrIndexByStdId(_stdId);
+        uint[] memory results = new uint[](students[index].recordCount);
         uint total;
         for (uint i=0; i<records.length; i++) {
             if (records[i].stdIndex == index) {
@@ -34,5 +34,13 @@ contract RecordTracking is StudentFactory {
             }
         }
         return results;
+    }
+
+    function recordsLength() public view returns (uint) {
+        return records.length;
+    }
+
+    function sender() public view returns (address) {
+        return msg.sender;
     }
 }

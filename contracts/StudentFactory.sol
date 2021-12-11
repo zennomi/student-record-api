@@ -9,16 +9,18 @@ contract StudentFactory is Admin {
     struct Student {
         string name;
         string iCNo;
+        string id;
         uint recordCount;
     }
 
-    function _addStudent(string memory _name, string memory _iCNo) private {
-        Student memory newStudent = Student(_name, _iCNo, 0);
+    function _addStudent(string memory _name, string memory _iCNo, string memory id) private {
+        Student memory newStudent = Student(_name, _iCNo, id, 0);
         students.push(newStudent);
     }
 
     function addStudent(string memory _stdId, string memory _name, string memory _iCNo) public {
-        _addStudent(_name, _iCNo);
+        require(stdIdToIndex[_stdId] == 0, "StudentID existed");
+        _addStudent(_name, _iCNo, _stdId);
         stdIdToIndex[_stdId] = students.length;
     }
 
@@ -28,14 +30,18 @@ contract StudentFactory is Admin {
     }
 
     function changeStudentByStdId(string memory _stdId, string memory _name, string memory _iCNo) public onlyAdmin {
-        uint index = getIndexArrByStdId(_stdId);
+        uint index = getArrIndexByStdId(_stdId);
         _changeStudent(index, _name, _iCNo);
     }
 
-    function getIndexArrByStdId(string memory _stdId) public view returns (uint) {
+    function getArrIndexByStdId(string memory _stdId) public view returns (uint) {
         uint index = stdIdToIndex[_stdId];
         require(index > 0, "Not Found Student With This Id");
         return index-1;
+    }
+    
+    function studentsLength() public view returns (uint) {
+        return students.length;
     }
 }
 

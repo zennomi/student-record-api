@@ -1,0 +1,251 @@
+{
+	"compiler": {
+		"version": "0.5.17+commit.d19bba13"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_stdId",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_subjectId",
+						"type": "string"
+					},
+					{
+						"internalType": "uint8",
+						"name": "_mark",
+						"type": "uint8"
+					}
+				],
+				"name": "addRecordByStdId",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_stdId",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_iCNo",
+						"type": "string"
+					}
+				],
+				"name": "addStudent",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "admin",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_stdId",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_iCNo",
+						"type": "string"
+					}
+				],
+				"name": "changeStudentByStdId",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_stdId",
+						"type": "string"
+					}
+				],
+				"name": "getIndexArrByStdId",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_stdId",
+						"type": "string"
+					}
+				],
+				"name": "getRecordIndexesByStdId",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "records",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "subjectId",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "stdIndex",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "mark",
+						"type": "uint8"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "students",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "iCNo",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "recordCount",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"RecordTracking.sol": "RecordTracking"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Admin.sol": {
+			"keccak256": "0xe4dca651b9e6e1c05facaef7b2965eefa3ffbb3464a14e786bf4c415829cf995",
+			"urls": [
+				"bzz-raw://d4a72384ae114d7bb862dd31b51969764772506879c2c047650f1883e76aed7b",
+				"dweb:/ipfs/QmajKcH9Bkb2Tn7UdCwL1J6nS8tEd48oNtBms1s36D8pwH"
+			]
+		},
+		"RecordTracking.sol": {
+			"keccak256": "0xc29febd8271bbd81d1cad38412996b6cb83f815212d7080d598f204bc4084015",
+			"urls": [
+				"bzz-raw://b2e36a457951d114764c32a400e06003f290f36a6249a1db625ca864d645c21c",
+				"dweb:/ipfs/QmVoikJaEdyeqrYxjGUJhLLAsq3Vgb1XrPeY2e9Ac9bWqq"
+			]
+		},
+		"StudentFactory.sol": {
+			"keccak256": "0x16b5a1130f284d4a21d7287676682b08ced85145a3da0efe13abd0364a1ab954",
+			"urls": [
+				"bzz-raw://480b1456896f2695ce3ec36c8a274db16b83163641b290dcb812af285ca5d2c4",
+				"dweb:/ipfs/QmcDK5NC3AQ72ztn7xBm2RrTiEjP9isgacz5ypNBs67f27"
+			]
+		}
+	},
+	"version": 1
+}

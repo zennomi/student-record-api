@@ -33,7 +33,7 @@ Khai thác tính bất biến của dữ liệu được lưu trên blockchain.
 - Các methods trong web.eth.
 - Nhiều câu hỏi không có giải đáp trên stackoverflow như hồi code web, phải tự vọc trong document của Infura và Web3 😢
 
-## Contract
+## Giải thích contract
 
 Admin.sol (giới hạn một số quyền như thay đổi thông tin sinh viên).
 
@@ -54,30 +54,53 @@ contract Admin {
 
 StudentFactory.sol (thao tác thêm, sửa thông tin sinh viên)
 
+Khi gọi API, chủ yếu thao tác với MSSV nên mình cần map từ MSSV sang index trong mảng `stdIdToIndex`.
+
 ```solidity
 contract StudentFactory is Admin {
-    mapping (string => uint) stdIdToIndex; // start from 1
+    mapping (string => uint) stdIdToIndex; // start from 1, map tu MSSV sang index trong array
     Student[] public students;
 
     struct Student {
-        string name;
-        string iCNo;
-        string id;
-        uint recordCount;
+        string name; // ten sinh vien
+        string iCNo; // ma can cuoc cong dan
+        string id; // ma so sinh vien
+        uint recordCount; // so luong ban ghi ket qua hoc tap da luu tren blockchain
     }
 
+	//...
+}
+```
+
+Nhưng `stdIdToIndex` bắt đầu từ 1 vì nếu MSSV không tồn tại trả về 0. Thêm một hàm phụ kiểm tra xem MSSV có tồn tại trong blockchain không và trả về đúng index bắt đầu từ 0.
+
+```solidity
+    function getArrIndexByStdId(string memory _stdId) public view returns (uint) {
+        uint index = stdIdToIndex[_stdId];
+        require(index > 0, "Not Found Student With This Id");
+        return index-1;
+    }
+```
+
+Function thêm sinh viên.
+
+```solidity
     function _addStudent(string memory _name, string memory _iCNo, string memory id) private {
         Student memory newStudent = Student(_name, _iCNo, id, 0);
         students.push(newStudent);
     }
 
     function addStudent(string memory _stdId, string memory _name, string memory _iCNo) public {
-        require(stdIdToIndex[_stdId] == 0, "StudentID existed");
+        require(stdIdToIndex[_stdId] == 0, "StudentID existed"); // kiem tra trung mssv
         _addStudent(_name, _iCNo, _stdId);
         stdIdToIndex[_stdId] = students.length;
     }
+```
 
-    function _changeStudent(uint _index, string memory _name, string memory _iCNo) private {
+Function thay đổi sinh viên bằng MSSV (Chỉ admin, tránh thay đổi tuỳ tiện).
+
+```solidity
+		function _changeStudent(uint _index, string memory _name, string memory _iCNo) private {
         students[_index].name = _name;
         students[_index].iCNo = _iCNo;
     }
@@ -86,17 +109,6 @@ contract StudentFactory is Admin {
         uint index = getArrIndexByStdId(_stdId);
         _changeStudent(index, _name, _iCNo);
     }
-
-    function getArrIndexByStdId(string memory _stdId) public view returns (uint) {
-        uint index = stdIdToIndex[_stdId];
-        require(index > 0, "Not Found Student With This Id");
-        return index-1;
-    }
-    
-    function studentsLength() public view returns (uint) {
-        return students.length;
-    }
-}
 ```
 
 RecordTracking.sol (thêm, sửa xoá bản ghi điểm sinh viên, vì mục đích demo nên tối thiểu số field cần thiết)
@@ -111,8 +123,14 @@ contract RecordTracking is StudentFactory {
     }
 
     Record[] public records;
+		...
+ }
+```
 
-    function _addRecord(string memory _subjectId, uint _stdIndex, uint8 _mark) private {
+Thêm bản ghi kết quả học tập mới theo MSSV
+
+```solidity
+		function _addRecord(string memory _subjectId, uint _stdIndex, uint8 _mark) private {
         records.push(Record(_subjectId, _stdIndex, block.timestamp, _mark));
         students[_stdIndex].recordCount++;
     }
@@ -122,8 +140,12 @@ contract RecordTracking is StudentFactory {
         require(_mark <= 100, "Invalid Mark");
         _addRecord(_subjectId, index, _mark);
     }
+```
 
-    function getRecordIndexesByStdId(string memory _stdId) public view returns (uint[] memory) {
+Lấy danh sách index bản ghi kết quả học tập của SV theo MSSV
+
+```solidity
+		function getRecordIndexesByStdId(string memory _stdId) public view returns (uint[] memory) {
         uint index = getArrIndexByStdId(_stdId);
         uint[] memory results = new uint[](students[index].recordCount);
         uint total;
@@ -135,15 +157,6 @@ contract RecordTracking is StudentFactory {
         }
         return results;
     }
-
-    function recordsLength() public view returns (uint) {
-        return records.length;
-    }
-
-    function sender() public view returns (address) {
-        return msg.sender;
-    }
-}
 ```
 
 ## RESTful API
